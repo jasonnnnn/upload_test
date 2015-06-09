@@ -14,14 +14,20 @@
 
 	if($_FILES){
 
-		$tmp      = $_FILES['file']['tmp_name'][0];
-		$filename = $_FILES['file']['name'][0];
-
-		
-		move_uploaded_file($tmp, 'uploads/'.$filename);
+		$files = Upload::to_folder('uploads/');
 
 
-		URL::redirect('uploads/'.$filename);
+		if($files[0]['error_message'] == false){
+
+			URL::redirect($files[0]['filepath']);
+
+		}else{
+
+			echo $files[0]['error_message'];
+		}
+
+
+		// URL::redirect('uploads/'.$filename);
 	}
 
 
